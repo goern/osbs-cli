@@ -4,9 +4,10 @@ MAINTAINER Christoph Görn <cgoern@redhat.com>
 LABEL Vendor="Red Hat" License=GPLv2
 LABEL Version=0.0.1
 
-LABEL INSTALL="docker run --rm --privileged -v /:/host -e HOST=/host -e LOGDIR=${LOGDIR} -e CONFDIR=${CONFDIR} -e DATADIR=${DATADIR} -e IMAGE=IMAGE -e NAME=NAME IMAGE /bin/install.sh"
-LABEL RUN /usr/bin/docker run --rm osbs-cli 
-LABEL UNINSTALL="docker run --rm --privileged -v /:/host -e HOST=/host -e IMAGE=IMAGE -e NAME=NAME IMAGE /bin/uninstall.sh"
+LABEL INSTALL /usr/bin/docker run -t -i --rm --privileged -v /:/host --net=host --ipc=host --pid=host -e HOST=/host -e NAME=NAME -e IMAGE=IMAGE -v ${CONFDIR}:/etc/NAME -v ${LOGDIR}:/var/log/NAME -v ${DATADIR}:/var/lib/NAME -e CONFDIR=${CONFDIR} -e LOGDIR=${LOGDIR} -e DATADIR=${DATADIR} --name NAME IMAGE /install.sh'
+LABEL RUN /usr/bin/docker run --rm osbs-cli
+LABEL UNINSTALL /usr/bin/docker run -t -i --rm --privileged -v /:/host --net=host --ipc=host --pid=host -e HOST=/host -e NAME=NAME -e IMAGE=IMAGE -v ${CONFDIR}:/etc/NAME -v ${LOGDIR}:/var/log/NAME -v ${DATADIR}:/var/lib/NAME -e CONFDIR=${CONFDIR} -e LOGDIR=${LOGDIR} -e DATADIR=${DATADIR} --name NAME IMAGE /uninstall.sh
+
 ADD scripts /
 
 RUN yum --disablerepo=rhel-7-server-eus-rpms --disablerepo=rhel-7-server-htb-rpms install -y python-requests git
