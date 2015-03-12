@@ -1,3 +1,6 @@
 This is a simple command line container, please also add an alias to your profile:
 
 alias osbs-cli="sudo docker run --rm osbs-cli"
+
+
+If you use "atomic --install osbs-cli" the alias will be added to you profile by the atomic tool. good choice!
