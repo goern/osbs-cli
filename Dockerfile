@@ -18,5 +18,5 @@ RUN git clone http://git.engineering.redhat.com/git/users/ttomecek/osbs-min.git 
 ADD scripts /opt/osbs/
 
 WORKDIR /opt/osbs
-ENTRYPOINT [ "/usr/bin/python2.7", "/opt/osbs/osbs.py", "--server", "https://se-docker-builder.syseng.bos.redhat.com", "--server-port", "8443" ]
-
+ENTRYPOINT [ "/usr/bin/python2.7", "/opt/osbs/osbs.py" ]
+CMD [ "--server", "https://se-docker-builder.syseng.bos.redhat.com", "--server-port", "8443" ]
