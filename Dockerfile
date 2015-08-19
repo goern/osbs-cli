@@ -1,20 +1,15 @@
-FROM rhel7
+FROM fedora:22 
 
-MAINTAINER Christoph Görn <goern@redhat.com>
+MAINTAINER Christoph Görn <goern@b4mad.net>
 
-LABEL Vendor="Red Hat" 
-LABEL License="GPLv2"
-LABEL Version="0.1.0"
-LABEL Architecture="x86_64"
-
-LABEL RUN /usr/bin/docker run --rm --tty osbs-cli
+LABEL License="GPLv2" \
+      Version="0.1.0" \
+      Architecture="x86_64"
 
 # set up the repos so that we can get what we need
-RUN yum install yum-utils -y && \
-    yum-config-manager --disable \* && \
-    yum-config-manager --enable rhel-7-server-rpms --enable rhel-7-server-extras-rpms --enable rhel-7-server-optional-rpms && \
-    yum install rh-osbs && \
-    yum erase -y yum-utils python-kitchen python-chardet
+RUN dnf install --setopt=tsflags=nodocs -y osbs && \
+    dnf update -y --setopt=tsflags=nodocs && \
+    dnf clean all
 
 ADD osbs.conf /etc/osbs.conf
 
